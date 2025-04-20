@@ -1,65 +1,42 @@
-# NCKH2025
+# 🛍️ Giới thiệu dự án
 
-🚀 **LỘ TRÌNH XÂY DỰNG WEBSITE BÁN HÀNG HOÀN CHỈNH**  
-
-## 🎯 Mục tiêu  
-Xây dựng website bán hàng có **trang sản phẩm, giỏ hàng, thanh toán, quản lý đơn hàng**.  
-
-## 💻 Công nghệ  
-- **Frontend:** Next.js + Tailwind CSS + ShadCN UI  
-- **Backend:** Node.js (Express) + PostgreSQL (Dùng Prisma ORM)  
-- **Hosting:** Vercel (Frontend) + Render / Railway (Backend)  
+✨ **Hệ thống bán hàng quần áo và xác thực hàng hóa tự động** là một nền tảng thương mại điện tử hiện đại, giúp người dùng 🧥 mua sắm quần áo trực tuyến một cách dễ dàng, nhanh chóng, đồng thời đảm bảo 🔒 tính chính hãng của sản phẩm.
 
 ---
 
-## 🏗️ **Giai đoạn 1: Chuẩn bị & Thiết kế (1-2 ngày)**  
+## ⚙️ Công nghệ sử dụng:
 
-### ✅ 1. Xác định tính năng cần có  
-- 🛍️ **Trang sản phẩm**: Danh sách, chi tiết sản phẩm  
-- 🛒 **Giỏ hàng**: Thêm/xóa sản phẩm, cập nhật số lượng  
-- 💳 **Thanh toán**: Hỗ trợ VNPay, Momo hoặc COD  
-- 📦 **Quản lý đơn hàng**: Xem trạng thái, hủy đơn  
-- 👤 **Quản lý tài khoản**: Đăng nhập, đăng ký, cập nhật thông tin  
+### Frontend 🖥️
+- HTML / CSS  
+- Bootstrap 🎨  
+- Next.js ⚡ *(giúp tối ưu hiệu suất và trải nghiệm người dùng)*  
 
-### ✅ 2. Chọn công nghệ  
-- 🖥️ **Frontend**: Next.js (React) + Tailwind CSS + ShadCN UI  
-- 🛠️ **Backend**: Node.js (Express) + PostgreSQL (Dùng Prisma ORM)  
-  - ➡️ Nếu muốn đơn giản hơn, có thể dùng **MongoDB (NoSQL) với Mongoose**  
-- 🔐 **Authentication**: JWT hoặc dịch vụ **Auth0 / Firebase Authentication** (hỗ trợ đăng nhập bằng Google, Facebook)  
-- ☁️ **Hosting**: **Vercel (Frontend) + Render / Railway (Backend)**  
-
-### ✅ 3. Thiết kế UI/UX  
-- 🎨 Dùng **Figma** để phác thảo giao diện trang chủ, giỏ hàng, thanh toán  
+### Backend 🔧
+- ASP.NET Core 💼 – *mạnh mẽ, bảo mật cao, phù hợp cho hệ thống thương mại điện tử*
 
 ---
 
-## 💻 **Giai đoạn 2: Code Frontend (3-5 ngày)**  
-- 🔹 Cài đặt dự án với **Next.js, Tailwind CSS và ShadCN UI**  
-- 🔹 Xây dựng các trang chính: **Trang chủ, Sản phẩm, Giỏ hàng, Thanh toán, Hồ sơ người dùng**  
-- 🔹 Sử dụng **Zustand hoặc React Context** để quản lý state giỏ hàng  
+## 🔍 Tính năng nổi bật:
+
+✅ **Xác thực sản phẩm bằng mã vạch** (📄 Barcode)  
+✅ **Giỏ hàng, thanh toán, quản lý đơn hàng cơ bản**  
+✅ **Đăng nhập/Đăng ký người dùng**
 
 ---
 
-## 🔗 **Giai đoạn 3: Code Backend (5-7 ngày)**  
-- 🔹 Cài đặt **Node.js + Express + Prisma**  
-- 🔹 Tạo API RESTful cho **sản phẩm, giỏ hàng, đơn hàng, người dùng**  
-- 🔹 Xử lý thanh toán **VNPay / Momo**  
+## 🚀 Định hướng phát triển:
+
+- Ứng dụng **⛓️ Blockchain / 🖼️ NFT** để xác thực hàng hóa chính hãng và không thể làm giả  
+- Tăng cường độ tin cậy và minh bạch trong chuỗi cung ứng
 
 ---
 
-## 🔄 **Giai đoạn 4: Kết nối API (3-5 ngày)**  
-- 🔹 Dùng **Axios + React Query** để gọi API  
-- 🔹 Tích hợp **xác thực người dùng (JWT/Auth0/Firebase)**  
-- 🔹 Hoàn thiện luồng **giỏ hàng, thanh toán, quản lý đơn hàng**  
+## 🤖 Tích hợp Chatbot AI 💬
+
+- Tư vấn sản phẩm 👗  
+- Gợi ý size, mẫu phù hợp 👟  
+- Giải đáp thắc mắc khách hàng ⚡ 24/7  
 
 ---
 
-## 🚀 **Giai đoạn 5: Hoàn thiện & Triển khai (2-3 ngày)**  
-- 🔹 **Deploy Frontend:** Vercel  
-- 🔹 **Deploy Backend:** Railway / Render  
-- 🔹 **Cấu hình domain:** Cloudflare hoặc Namecheap  
-
----
-
-🎯 **Tổng thời gian: ~2 tuần**  
-🔥 **Sau 2 tuần bạn có thể có một website bán hàng hoàn chỉnh!** 🚀  
+> 📌 *Đây là một dự án nghiên cứu khoa học sinh viên năm 2025 với mục tiêu ứng dụng công nghệ vào lĩnh vực thương mại điện tử và xác thực sản phẩm thông minh.*
