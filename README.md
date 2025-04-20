@@ -19,8 +19,6 @@
 ## 🔍 Tính năng nổi bật:
 
 ✅ **Xác thực sản phẩm bằng mã vạch** (📄 Barcode)  
-✅ **Giỏ hàng, thanh toán, quản lý đơn hàng cơ bản**  
-✅ **Đăng nhập/Đăng ký người dùng**
 
 ---
 
