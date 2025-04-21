@@ -1,0 +1,3 @@
+Changed database context to 'Ban_Hang'.
+Đang xóa các thuộc tính không cần thiết khỏi bảng Vouchers...
+Lỗi: ALTER TABLE DROP COLUMN Id_NguoiTao failed because one or more objects access this column.

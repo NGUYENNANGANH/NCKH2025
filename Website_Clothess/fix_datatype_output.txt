@@ -1,0 +1,35 @@
+Changed database context to 'Ban_Hang'.
+Đã xóa dữ liệu trong bảng BarcodeScans
+Đã sửa kiểu dữ liệu của cột Id_SanPham thành INT
+Đã thêm Foreign Key FK_BarcodeScans_SanPhams
+Đã thêm Foreign Key FK_BarcodeScans_AspNetUsers
+Đã tạo Index IX_BarcodeScans_Barcode
+Đã tạo Index IX_BarcodeScans_User_Id
+Đã tạo Index IX_BarcodeScans_Id_SanPham
+Đã tạo Index IX_SanPhams_Barcode
+Đã xóa stored procedure sp_RecordBarcodeScan cũ
+Đã tạo stored procedure sp_RecordBarcodeScan với kiểu dữ liệu mới
+Đã xóa stored procedure sp_UpdateBarcodeScanAdded cũ
+Đã tạo stored procedure sp_UpdateBarcodeScanAdded với kiểu dữ liệu mới
+COLUMN_NAME                                                                                                                      DATA_TYPE                                                                                                                        CHARACTER_MAXIMUM_LENGTH IS_NULLABLE
+-------------------------------------------------------------------------------------------------------------------------------- -------------------------------------------------------------------------------------------------------------------------------- ------------------------ -----------
+Id                                                                                                                               int                                                                                                                                                  NULL NO         
+Barcode                                                                                                                          nvarchar                                                                                                                                               50 NO         
+User_Id                                                                                                                          nvarchar                                                                                                                                              450 YES        
+ScanDate                                                                                                                         datetime                                                                                                                                             NULL NO         
+FoundInDatabase                                                                                                                  bit                                                                                                                                                  NULL NO         
+Id_SanPham                                                                                                                       int                                                                                                                                                  NULL YES        
+ApiResponse                                                                                                                      nvarchar                                                                                                                                               -1 YES        
+IsAdded                                                                                                                          bit                                                                                                                                                  NULL NO         
+DateAdded                                                                                                                        datetime                                                                                                                                             NULL YES        
+
+(9 rows affected)
+ForeignKeyName                                                                                                                   TableName                                                                                                                        ColumnName                                                                                                                       ReferencedTableName                                                                                                              ReferencedColumnName                                                                                                            
+-------------------------------------------------------------------------------------------------------------------------------- -------------------------------------------------------------------------------------------------------------------------------- -------------------------------------------------------------------------------------------------------------------------------- -------------------------------------------------------------------------------------------------------------------------------- --------------------------------------------------------------------------------------------------------------------------------
+FK_BarcodeScans_AspNetUsers                                                                                                      BarcodeScans                                                                                                                     User_Id                                                                                                                          AspNetUsers                                                                                                                      Id                                                                                                                              
+FK_BarcodeScans_SanPhams                                                                                                         BarcodeScans                                                                                                                     Id_SanPham                                                                                                                       SanPhams                                                                                                                         Id_SanPham                                                                                                                      
+
+(2 rows affected)
+===============================================================
+Đã sửa thành công cấu trúc bảng BarcodeScans và thêm foreign keys!
+===============================================================

@@ -1,0 +1,5 @@
+Changed database context to 'Ban_Hang'.
+Msg 209, Level 16, State 1, Server LAPTOP-1AJV4E7H\SQLEXPRESS, Line 28
+Ambiguous column name 'COLUMN_NAME'.
+Msg 209, Level 16, State 1, Server LAPTOP-1AJV4E7H\SQLEXPRESS, Line 41
+Ambiguous column name 'COLUMN_NAME'.
