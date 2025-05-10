@@ -1,0 +1,19 @@
+Changed database context to 'Ban_Hang'.
+Cột Barcode đã tồn tại trong bảng SanPhams
+Bảng BarcodeScans đã tồn tại
+COLUMN_NAME                                                                                                                      DATA_TYPE                                                                                                                        CHARACTER_MAXIMUM_LENGTH
+-------------------------------------------------------------------------------------------------------------------------------- -------------------------------------------------------------------------------------------------------------------------------- ------------------------
+Id                                                                                                                               int                                                                                                                                                  NULL
+Barcode                                                                                                                          nvarchar                                                                                                                                               50
+User_Id                                                                                                                          nvarchar                                                                                                                                              450
+ScanDate                                                                                                                         datetime                                                                                                                                             NULL
+FoundInDatabase                                                                                                                  bit                                                                                                                                                  NULL
+Id_SanPham                                                                                                                       nvarchar                                                                                                                                              450
+ApiResponse                                                                                                                      nvarchar                                                                                                                                               -1
+
+(7 rows affected)
+Id_SanPham  TenSanPham                                                                                                                                                                                                                                                      Barcode                                           
+----------- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- --------------------------------------------------
+
+(0 rows affected)
+Đã hoàn thành kiểm tra và cập nhật hỗ trợ mã barcode!

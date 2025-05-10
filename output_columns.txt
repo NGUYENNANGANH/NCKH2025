@@ -1,0 +1,19 @@
+Changed database context to 'Ban_Hang'.
+Đã thêm cột IsAdded vào bảng BarcodeScans
+Đã thêm cột DateAdded vào bảng BarcodeScans
+Đã tạo stored procedure sp_RecordBarcodeScan
+Đã tạo stored procedure sp_UpdateBarcodeScanAdded
+COLUMN_NAME                                                                                                                      DATA_TYPE                                                                                                                        CHARACTER_MAXIMUM_LENGTH
+-------------------------------------------------------------------------------------------------------------------------------- -------------------------------------------------------------------------------------------------------------------------------- ------------------------
+Id                                                                                                                               int                                                                                                                                                  NULL
+Barcode                                                                                                                          nvarchar                                                                                                                                               50
+User_Id                                                                                                                          nvarchar                                                                                                                                              450
+ScanDate                                                                                                                         datetime                                                                                                                                             NULL
+FoundInDatabase                                                                                                                  bit                                                                                                                                                  NULL
+Id_SanPham                                                                                                                       nvarchar                                                                                                                                              450
+ApiResponse                                                                                                                      nvarchar                                                                                                                                               -1
+IsAdded                                                                                                                          bit                                                                                                                                                  NULL
+DateAdded                                                                                                                        datetime                                                                                                                                             NULL
+
+(9 rows affected)
+Đã cập nhật thành công cấu trúc bảng BarcodeScans và tạo các stored procedures!

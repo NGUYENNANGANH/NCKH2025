@@ -1,0 +1,41 @@
+Changed database context to 'Ban_Hang'.
+KiemTraBangSanPhams               
+----------------------------------
+Bảng SanPhams tồn tại       
+
+(1 rows affected)
+KiemTraBangAspNetUsers               
+-------------------------------------
+Bảng AspNetUsers tồn tại       
+
+(1 rows affected)
+KiemTraBangBarcodeScans               
+--------------------------------------
+Bảng BarcodeScans tồn tại       
+
+(1 rows affected)
+COLUMN_NAME                                                                                                                      DATA_TYPE                                                                                                                        CHARACTER_MAXIMUM_LENGTH IS_NULLABLE
+-------------------------------------------------------------------------------------------------------------------------------- -------------------------------------------------------------------------------------------------------------------------------- ------------------------ -----------
+Id_SanPham                                                                                                                       int                                                                                                                                                  NULL NO         
+Barcode                                                                                                                          nvarchar                                                                                                                                               50 YES        
+
+(2 rows affected)
+COLUMN_NAME                                                                                                                      DATA_TYPE                                                                                                                        CHARACTER_MAXIMUM_LENGTH IS_NULLABLE
+-------------------------------------------------------------------------------------------------------------------------------- -------------------------------------------------------------------------------------------------------------------------------- ------------------------ -----------
+Id                                                                                                                               nvarchar                                                                                                                                              450 NO         
+
+(1 rows affected)
+COLUMN_NAME                                                                                                                      DATA_TYPE                                                                                                                        CHARACTER_MAXIMUM_LENGTH IS_NULLABLE
+-------------------------------------------------------------------------------------------------------------------------------- -------------------------------------------------------------------------------------------------------------------------------- ------------------------ -----------
+Id                                                                                                                               int                                                                                                                                                  NULL NO         
+Barcode                                                                                                                          nvarchar                                                                                                                                               50 NO         
+User_Id                                                                                                                          nvarchar                                                                                                                                              450 YES        
+ScanDate                                                                                                                         datetime                                                                                                                                             NULL NO         
+FoundInDatabase                                                                                                                  bit                                                                                                                                                  NULL NO         
+Id_SanPham                                                                                                                       nvarchar                                                                                                                                              450 YES        
+ApiResponse                                                                                                                      nvarchar                                                                                                                                               -1 YES        
+IsAdded                                                                                                                          bit                                                                                                                                                  NULL NO         
+DateAdded                                                                                                                        datetime                                                                                                                                             NULL YES        
+
+(9 rows affected)
+Lỗi: Could not create constraint or index. See previous errors.
