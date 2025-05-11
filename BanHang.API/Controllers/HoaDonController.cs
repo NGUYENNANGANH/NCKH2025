@@ -42,7 +42,7 @@ namespace BanHang.API.Controllers
                 DonHang = h.DonHang != null ? new DonHangDto
                 {
                     Id_DonHang = h.DonHang.Id_DonHang,
-                    Id_KH = h.DonHang.Id_KH,
+                    User_Id = h.DonHang.User_Id,
                     NgayDat = h.DonHang.NgayDat,
                     TongTien = h.DonHang.TongTien,
                     TrangThai = h.DonHang.TrangThai,
@@ -90,7 +90,7 @@ namespace BanHang.API.Controllers
                 DonHang = hoaDon.DonHang != null ? new DonHangDto
                 {
                     Id_DonHang = hoaDon.DonHang.Id_DonHang,
-                    Id_KH = hoaDon.DonHang.Id_KH,
+                    User_Id = hoaDon.DonHang.User_Id,
                     NgayDat = hoaDon.DonHang.NgayDat,
                     TongTien = hoaDon.DonHang.TongTien,
                     TrangThai = hoaDon.DonHang.TrangThai,
@@ -138,7 +138,7 @@ namespace BanHang.API.Controllers
                 DonHang = hoaDon.DonHang != null ? new DonHangDto
                 {
                     Id_DonHang = hoaDon.DonHang.Id_DonHang,
-                    Id_KH = hoaDon.DonHang.Id_KH,
+                    User_Id = hoaDon.DonHang.User_Id,
                     NgayDat = hoaDon.DonHang.NgayDat,
                     TongTien = hoaDon.DonHang.TongTien,
                     TrangThai = hoaDon.DonHang.TrangThai,
@@ -215,7 +215,7 @@ namespace BanHang.API.Controllers
                 DonHang = createdHoaDon.DonHang != null ? new DonHangDto
                 {
                     Id_DonHang = createdHoaDon.DonHang.Id_DonHang,
-                    Id_KH = createdHoaDon.DonHang.Id_KH,
+                    User_Id = createdHoaDon.DonHang.User_Id,
                     NgayDat = createdHoaDon.DonHang.NgayDat,
                     TongTien = createdHoaDon.DonHang.TongTien,
                     TrangThai = createdHoaDon.DonHang.TrangThai,

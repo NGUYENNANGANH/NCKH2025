@@ -22,10 +22,6 @@ namespace BanHang.API.Data
         public DbSet<HoaDon> HoaDons { get; set; }
         
         // Thêm DbSet cho các mô hình mới
-        public DbSet<Voucher> Vouchers { get; set; }
-        public DbSet<VoucherDanhMuc> VoucherDanhMucs { get; set; }
-        public DbSet<VoucherSanPham> VoucherSanPhams { get; set; }
-        public DbSet<VoucherSuDung> VoucherSuDungs { get; set; }
         public DbSet<Payment> Payments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -66,24 +62,6 @@ namespace BanHang.API.Data
                 .Property(p => p.Amount)
                 .HasPrecision(18, 2);
 
-            // Voucher
-            modelBuilder.Entity<Voucher>()
-                .Property(v => v.GiaTri)
-                .HasPrecision(18, 2);
-
-            modelBuilder.Entity<Voucher>()
-                .Property(v => v.GiaTriToiDa)
-                .HasPrecision(18, 2);
-
-            modelBuilder.Entity<Voucher>()
-                .Property(v => v.GiaTriDonHangToiThieu)
-                .HasPrecision(18, 2);
-
-            // VoucherSuDung
-            modelBuilder.Entity<VoucherSuDung>()
-                .Property(v => v.GiaTriApDung)
-                .HasPrecision(18, 2);
-
             // Configure composite keys
             modelBuilder.Entity<ChiTietGioHang>()
                 .HasKey(c => new { c.Id_GioHang, c.Id_SanPham });
@@ -93,12 +71,6 @@ namespace BanHang.API.Data
 
             modelBuilder.Entity<SanPham_KhuyenMai>()
                 .HasKey(c => new { c.Id_KhuyenMai, c.Id_SanPham });
-                
-            modelBuilder.Entity<VoucherDanhMuc>()
-                .HasKey(v => new { v.Id_Voucher, v.Id_DanhMuc });
-                
-            modelBuilder.Entity<VoucherSanPham>()
-                .HasKey(v => new { v.Id_Voucher, v.Id_SanPham });
 
             // Configure one-to-many relationships
             // DanhMuc -> SanPham
@@ -168,8 +140,8 @@ namespace BanHang.API.Data
             modelBuilder.Entity<ApplicationUser>()
                 .HasMany<DonHang>()
                 .WithOne(d => d.KhachHang)
-                .HasForeignKey(d => d.Id_KH)
-                .OnDelete(DeleteBehavior.Restrict);
+                .HasForeignKey(d => d.User_Id)
+                .OnDelete(DeleteBehavior.Cascade);
 
             // ApplicationUser -> DanhGia
             modelBuilder.Entity<ApplicationUser>()
@@ -191,25 +163,6 @@ namespace BanHang.API.Data
                 .WithOne(h => h.DonHang)
                 .HasForeignKey<HoaDon>(h => h.Id_DonHang)
                 .OnDelete(DeleteBehavior.Restrict);
-                
-            // Voucher relationships
-            modelBuilder.Entity<Voucher>()
-                .HasMany(v => v.VoucherDanhMucs)
-                .WithOne(vd => vd.Voucher)
-                .HasForeignKey(vd => vd.Id_Voucher)
-                .OnDelete(DeleteBehavior.Cascade);
-                
-            modelBuilder.Entity<Voucher>()
-                .HasMany(v => v.VoucherSanPhams)
-                .WithOne(vs => vs.Voucher)
-                .HasForeignKey(vs => vs.Id_Voucher)
-                .OnDelete(DeleteBehavior.Cascade);
-                
-            modelBuilder.Entity<Voucher>()
-                .HasMany(v => v.LichSuSuDung)
-                .WithOne(vsd => vsd.Voucher)
-                .HasForeignKey(vsd => vsd.Id_Voucher)
-                .OnDelete(DeleteBehavior.Cascade);
                 
             // Payment relationships
             modelBuilder.Entity<DonHang>()

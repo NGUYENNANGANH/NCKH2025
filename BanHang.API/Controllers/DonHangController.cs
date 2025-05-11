@@ -34,14 +34,14 @@ namespace BanHang.API.Controllers
                 .Include(d => d.KhachHang)
                 .Include(d => d.ChiTietDonHangs)
                 .ThenInclude(c => c.SanPham)
-                .Where(d => d.Id_KH == userId)
+                .Where(d => d.User_Id == userId)
                 .OrderByDescending(d => d.NgayDat)
                 .ToListAsync();
 
             var donHangDtos = donHangs.Select(d => new DonHangDto
             {
                 Id_DonHang = d.Id_DonHang,
-                Id_KH = d.Id_KH,
+                User_Id = d.User_Id,
                 TenKhachHang = d.KhachHang?.FullName ?? d.KhachHang?.UserName ?? "Unknown",
                 NgayDat = d.NgayDat,
                 TongTien = d.TongTien,
@@ -50,6 +50,7 @@ namespace BanHang.API.Controllers
                 SoDienThoai = d.SoDienThoai,
                 GhiChu = d.GhiChu,
                 PhuongThucThanhToan = d.PhuongThucThanhToan,
+                PhiVanChuyen = d.PhiVanChuyen,
                 ChiTietDonHangs = d.ChiTietDonHangs?.Select(c => new ChiTietDonHangDto
                 {
                     Id_DonHang = c.Id_DonHang,
@@ -87,7 +88,7 @@ namespace BanHang.API.Controllers
             var donHangDtos = donHangs.Select(d => new DonHangDto
             {
                 Id_DonHang = d.Id_DonHang,
-                Id_KH = d.Id_KH,
+                User_Id = d.User_Id,
                 TenKhachHang = d.KhachHang?.FullName ?? d.KhachHang?.UserName ?? "Unknown",
                 NgayDat = d.NgayDat,
                 TongTien = d.TongTien,
@@ -96,6 +97,7 @@ namespace BanHang.API.Controllers
                 SoDienThoai = d.SoDienThoai,
                 GhiChu = d.GhiChu,
                 PhuongThucThanhToan = d.PhuongThucThanhToan,
+                PhiVanChuyen = d.PhiVanChuyen,
                 ChiTietDonHangs = d.ChiTietDonHangs?.Select(c => new ChiTietDonHangDto
                 {
                     Id_DonHang = c.Id_DonHang,
@@ -131,7 +133,7 @@ namespace BanHang.API.Controllers
             }
 
             // Check if the user is the owner or an admin/manager
-            if (donHang.Id_KH != userId && !User.IsInRole("Admin") && !User.IsInRole("Manager"))
+            if (donHang.User_Id != userId && !User.IsInRole("Admin") && !User.IsInRole("Manager"))
             {
                 return Forbid();
             }
@@ -139,7 +141,7 @@ namespace BanHang.API.Controllers
             var donHangDto = new DonHangDto
             {
                 Id_DonHang = donHang.Id_DonHang,
-                Id_KH = donHang.Id_KH,
+                User_Id = donHang.User_Id,
                 TenKhachHang = donHang.KhachHang?.FullName ?? donHang.KhachHang?.UserName ?? "Unknown",
                 NgayDat = donHang.NgayDat,
                 TongTien = donHang.TongTien,
@@ -148,6 +150,7 @@ namespace BanHang.API.Controllers
                 SoDienThoai = donHang.SoDienThoai,
                 GhiChu = donHang.GhiChu,
                 PhuongThucThanhToan = donHang.PhuongThucThanhToan,
+                PhiVanChuyen = donHang.PhiVanChuyen,
                 ChiTietDonHangs = donHang.ChiTietDonHangs?.Select(c => new ChiTietDonHangDto
                 {
                     Id_DonHang = c.Id_DonHang,
@@ -221,14 +224,15 @@ namespace BanHang.API.Controllers
             // Create new order
             var donHang = new DonHang
             {
-                Id_KH = userId,
+                User_Id = userId,
                 NgayDat = DateTime.Now,
-                TongTien = tongTien,
+                TongTien = tongTien + createDonHangDto.PhiVanChuyen, // Add shipping fee to total
                 TrangThai = TrangThaiDonHang.ChoXacNhan, // Initial status is pending
                 DiaChiGiaoHang = createDonHangDto.DiaChiGiaoHang,
                 SoDienThoai = createDonHangDto.SoDienThoai,
                 GhiChu = createDonHangDto.GhiChu,
-                PhuongThucThanhToan = createDonHangDto.PhuongThucThanhToan
+                PhuongThucThanhToan = createDonHangDto.PhuongThucThanhToan,
+                PhiVanChuyen = createDonHangDto.PhiVanChuyen
             };
 
             _context.DonHangs.Add(donHang);
@@ -293,7 +297,7 @@ namespace BanHang.API.Controllers
             var donHangDto = new DonHangDto
             {
                 Id_DonHang = donHang.Id_DonHang,
-                Id_KH = donHang.Id_KH,
+                User_Id = donHang.User_Id,
                 NgayDat = donHang.NgayDat,
                 TongTien = donHang.TongTien,
                 TrangThai = donHang.TrangThai,
@@ -301,6 +305,7 @@ namespace BanHang.API.Controllers
                 SoDienThoai = donHang.SoDienThoai,
                 GhiChu = donHang.GhiChu,
                 PhuongThucThanhToan = donHang.PhuongThucThanhToan,
+                PhiVanChuyen = donHang.PhiVanChuyen,
                 ChiTietDonHangs = await _context.ChiTietDonHangs
                     .Where(c => c.Id_DonHang == donHang.Id_DonHang)
                     .Select(c => new ChiTietDonHangDto

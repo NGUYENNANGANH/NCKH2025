@@ -29,7 +29,7 @@ namespace BanHang.API.Controllers
                     TenDanhMuc = d.TenDanhMuc,
                     MoTa = d.MoTa,
                     TrangThai = d.TrangThai,
-                    SoLuongSanPham = _context.SanPhams.Count(s => s.Id_DanhMuc == d.Id_DanhMuc && s.TrangThaiSanPham == TrangThaiSanPham.DangBan)
+                    SoLuongSanPham = _context.SanPhams.Count(s => s.Id_DanhMuc == d.Id_DanhMuc && s.TrangThaiSanPham_Value == (int)TrangThaiSanPham.DangBan)
                 })
                 .ToListAsync();
 
@@ -53,7 +53,7 @@ namespace BanHang.API.Controllers
                 TenDanhMuc = danhMuc.TenDanhMuc,
                 MoTa = danhMuc.MoTa,
                 TrangThai = danhMuc.TrangThai,
-                SoLuongSanPham = await _context.SanPhams.CountAsync(s => s.Id_DanhMuc == id && s.TrangThaiSanPham == TrangThaiSanPham.DangBan)
+                SoLuongSanPham = await _context.SanPhams.CountAsync(s => s.Id_DanhMuc == id && s.TrangThaiSanPham_Value == (int)TrangThaiSanPham.DangBan)
             };
 
             return Ok(danhMucDto);
@@ -62,7 +62,7 @@ namespace BanHang.API.Controllers
         // POST: api/DanhMuc
         [HttpPost]
         [Authorize(Roles = "Admin,Manager")]
-        public async Task<ActionResult<DanhMucDto>> CreateDanhMuc([FromBody] DanhMucCreateDto danhMucDto)
+        public async Task<ActionResult<object>> CreateDanhMuc([FromBody] DanhMucCreateDto danhMucDto)
         {
             if (!ModelState.IsValid)
             {
@@ -88,16 +88,12 @@ namespace BanHang.API.Controllers
             _context.DanhMucs.Add(danhMuc);
             await _context.SaveChangesAsync();
 
-            var result = new DanhMucDto
+            // Chỉ trả về thông báo thành công kèm id
+            return CreatedAtAction("GetDanhMuc", new { id = danhMuc.Id_DanhMuc }, new
             {
-                Id_DanhMuc = danhMuc.Id_DanhMuc,
-                TenDanhMuc = danhMuc.TenDanhMuc,
-                MoTa = danhMuc.MoTa,
-                TrangThai = danhMuc.TrangThai,
-                SoLuongSanPham = 0
-            };
-
-            return CreatedAtAction("GetDanhMuc", new { id = danhMuc.Id_DanhMuc }, result);
+                message = "Danh mục đã được tạo thành công",
+                id = danhMuc.Id_DanhMuc
+            });
         }
 
         // PUT: api/DanhMuc/5
@@ -148,7 +144,12 @@ namespace BanHang.API.Controllers
                 }
             }
 
-            return NoContent();
+            // Chỉ trả về thông báo thành công
+            return Ok(new
+            {
+                message = "Danh mục đã được cập nhật thành công",
+                id = id
+            });
         }
 
         // DELETE: api/DanhMuc/5
@@ -172,7 +173,11 @@ namespace BanHang.API.Controllers
             _context.DanhMucs.Remove(danhMuc);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok(new
+            {
+                message = "Danh mục đã được xóa thành công",
+                id = id
+            });
         }
 
         private bool DanhMucExists(int id)

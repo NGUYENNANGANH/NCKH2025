@@ -49,9 +49,10 @@ namespace BanHang.API.Controllers
                 return NotFound("Không tìm thấy đơn hàng");
             }
 
-            if (donHang.Id_KH != userId)
+            // Chỉ cho phép người dùng thanh toán đơn hàng của chính họ
+            if (donHang.User_Id != userId)
             {
-                return Forbid("Bạn không có quyền truy cập đơn hàng này");
+                return Forbid();
             }
 
             if (donHang.TrangThai != TrangThaiDonHang.ChoXacNhan)

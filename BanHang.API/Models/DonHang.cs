@@ -18,7 +18,7 @@ namespace BanHang.API.Models
         public string Id_DonHang { get; set; } = Guid.NewGuid().ToString();
         
         [ForeignKey("KhachHang")]
-        public string Id_KH { get; set; } = string.Empty;
+        public string User_Id { get; set; } = string.Empty;
         
         public DateTime NgayDat { get; set; } = DateTime.Now;
         
@@ -38,9 +38,6 @@ namespace BanHang.API.Models
         public string PhuongThucThanhToan { get; set; } = "Tiền mặt";
         
         public decimal PhiVanChuyen { get; set; } = 0;
-        
-        [MaxLength(50)]
-        public string? MaGiamGia { get; set; }
         
         // Navigation Properties
         public virtual ApplicationUser? KhachHang { get; set; }

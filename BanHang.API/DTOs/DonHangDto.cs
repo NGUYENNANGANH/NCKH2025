@@ -5,7 +5,7 @@ namespace BanHang.API.DTOs
     public class DonHangDto
     {
         public string Id_DonHang { get; set; } = string.Empty;
-        public string Id_KH { get; set; } = string.Empty;
+        public string User_Id { get; set; } = string.Empty;
         public string TenKhachHang { get; set; } = string.Empty;
         public DateTime NgayDat { get; set; }
         public decimal TongTien { get; set; }
@@ -15,7 +15,6 @@ namespace BanHang.API.DTOs
         public string? GhiChu { get; set; }
         public string PhuongThucThanhToan { get; set; } = string.Empty;
         public decimal PhiVanChuyen { get; set; } = 0;
-        public string? MaGiamGia { get; set; }
         public List<ChiTietDonHangDto> ChiTietDonHangs { get; set; } = new List<ChiTietDonHangDto>();
     }
 
@@ -48,6 +47,8 @@ namespace BanHang.API.DTOs
         [Required]
         [MaxLength(50)]
         public string PhuongThucThanhToan { get; set; } = "Tiền mặt";
+        
+        public decimal PhiVanChuyen { get; set; } = 0;
     }
 
     public class UpdateDonHangStatusDto

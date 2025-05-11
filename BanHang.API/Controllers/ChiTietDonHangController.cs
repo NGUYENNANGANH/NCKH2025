@@ -61,7 +61,7 @@ namespace BanHang.API.Controllers
                 return NotFound();
             }
 
-            if (donHang.Id_KH != userId && !User.IsInRole("Admin") && !User.IsInRole("Manager"))
+            if (donHang.User_Id != userId && !User.IsInRole("Admin") && !User.IsInRole("Manager"))
             {
                 return Forbid();
             }
