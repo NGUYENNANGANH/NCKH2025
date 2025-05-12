@@ -1,0 +1,6 @@
+@BanHang.API_HostAddress = http://localhost:5140
+
+GET {{BanHang.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
