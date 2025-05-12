@@ -1,40 +1,58 @@
-# 🛍️ Giới thiệu dự án
+# eStore Next.js Frontend
 
-✨ **Hệ thống bán hàng quần áo và xác thực hàng hóa tự động** là một nền tảng thương mại điện tử hiện đại, giúp người dùng 🧥 mua sắm quần áo trực tuyến một cách dễ dàng, nhanh chóng, đồng thời đảm bảo 🔒 tính chính hãng của sản phẩm.
+This is the frontend for the eStore e-commerce application built with Next.js and TypeScript. It connects to an ASP.NET Core backend API.
 
----
+## Features
 
-## ⚙️ Công nghệ sử dụng:
+- Modern UI with Tailwind CSS
+- Responsive design for all devices
+- Product listing and details
+- Shopping cart functionality
+- User authentication
+- Checkout process
 
-### Frontend 🖥️
-- HTML / CSS  
-- Bootstrap 🎨  
-- Next.js ⚡ *(giúp tối ưu hiệu suất và trải nghiệm người dùng)*  
+## Prerequisites
 
-### Backend 🔧
-- ASP.NET Core 💼 – *mạnh mẽ, bảo mật cao, phù hợp cho hệ thống thương mại điện tử*
+- Node.js 18.x or later
+- npm or yarn
+- ASP.NET Core backend API running on http://localhost:5000
 
----
+## Getting Started
 
-## 🔍 Tính năng nổi bật:
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+3. Run the development server:
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-✅ **Xác thực sản phẩm bằng mã vạch** (📄 Barcode)  
+## Project Structure
 
----
+- `/src/app` - Next.js app router pages
+- `/src/components` - Reusable React components
+- `/src/lib` - Utility functions and API services
+- `/public` - Static assets
 
-## 🚀 Định hướng phát triển:
+## API Integration
 
-- Ứng dụng **⛓️ Blockchain / 🖼️ NFT** để xác thực hàng hóa chính hãng và không thể làm giả  
-- Tăng cường độ tin cậy và minh bạch trong chuỗi cung ứng
+The frontend connects to the ASP.NET Core backend API. The API endpoints are configured in the `next.config.js` file to proxy requests to the backend.
 
----
+## Technologies Used
 
-## 🤖 Tích hợp Chatbot AI 💬
+- Next.js 14
+- React 18
+- TypeScript
+- Tailwind CSS
+- Axios for API requests
 
-- Tư vấn sản phẩm 👗  
-- Gợi ý size, mẫu phù hợp 👟  
-- Giải đáp thắc mắc khách hàng ⚡ 24/7  
+## License
 
----
-
-> 📌 *Đây là một dự án nghiên cứu khoa học sinh viên năm 2025 với mục tiêu ứng dụng công nghệ vào lĩnh vực thương mại điện tử và xác thực sản phẩm thông minh.*
+This project is licensed under the MIT License. 
