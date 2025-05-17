@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đánh giá sản phẩm - Shop Bán Hàng</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Shop Bán Hàng</h1>
+    </div>
+
+    <nav class="nav">
+        <ul>
+            <li><a href="index.html">Trang chủ</a></li>
+            <li><a href="cart.html">Giỏ hàng</a></li>
+            <li><a href="orders.html">Đơn hàng</a></li>
+            <li><a href="profile.html">Tài khoản</a></li>
+            <li><a href="#" id="logoutBtn">Đăng xuất</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <h2>Đánh giá sản phẩm</h2>
+            <div class="form-group">
+                <select id="productSelect">
+                    <option value="">Chọn sản phẩm cần đánh giá</option>
+                </select>
+            </div>
+            <div id="reviewForm" style="display: none;">
+                <form id="addReviewForm">
+                    <div class="form-group">
+                        <label>Đánh giá của bạn:</label>
+                        <div class="rating">
+                            <input type="radio" name="diemDanhGia" value="5" id="star5" required>
+                            <label for="star5">★</label>
+                            <input type="radio" name="diemDanhGia" value="4" id="star4">
+                            <label for="star4">★</label>
+                            <input type="radio" name="diemDanhGia" value="3" id="star3">
+                            <label for="star3">★</label>
+                            <input type="radio" name="diemDanhGia" value="2" id="star2">
+                            <label for="star2">★</label>
+                            <input type="radio" name="diemDanhGia" value="1" id="star1">
+                            <label for="star1">★</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="noiDung">Nhận xét của bạn:</label>
+                        <textarea id="noiDung" name="noiDung" required></textarea>
+                    </div>
+                    <button type="submit" class="btn">Gửi đánh giá</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top: 2rem;">
+            <h2>Đánh giá của bạn</h2>
+            <div id="userReviews"></div>
+        </div>
+    </div>
+
+    <script src="common.js"></script>
+    <script>
+        // Check authentication
+        requireAuth();
+
+        // Load products for review
+        const loadProductsForReview = async () => {
+            try {
+                const products = await apiRequest('/DanhGia/SanPhamDaDanhGia');
+                const select = document.getElementById('productSelect');
+                
+                products.forEach(product => {
+                    const option = document.createElement('option');
+                    option.value = product.id_SanPham;
+                    option.textContent = product.tenSanPham;
+                    select.appendChild(option);
+                });
+            } catch (error) {
+                showAlert('Không thể tải danh sách sản phẩm!', 'error');
+            }
+        };
+
+        // Show review form when product is selected
+        document.getElementById('productSelect').addEventListener('change', (e) => {
+            document.getElementById('reviewForm').style.display = e.target.value ? 'block' : 'none';
+        });
+
+        // Submit review
+        document.getElementById('addReviewForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const productId = document.getElementById('productSelect').value;
+            const formData = new FormData(e.target);
+            const data = {
+                id_SanPham: parseInt(productId),
+                diemDanhGia: parseInt(formData.get('diemDanhGia')),
+                noiDung: formData.get('noiDung')
+            };
+            
+            try {
+                await apiRequest('/DanhGia', {
+                    method: 'POST',
+                    body: JSON.stringify(data)
+                });
+                showAlert('Gửi đánh giá thành công!');
+                e.target.reset();
+                loadUserReviews();
+            } catch (error) {
+                showAlert('Không thể gửi đánh giá!', 'error');
+            }
+        });
+
+        // Load user reviews
+        const loadUserReviews = async () => {
+            try {
+                const reviews = await apiRequest('/DanhGia/User');
+                const userReviews = document.getElementById('userReviews');
+                
+                if (reviews.length === 0) {
+                    userReviews.innerHTML = '<p>Bạn chưa có đánh giá nào</p>';
+                    return;
+                }
+
+                userReviews.innerHTML = reviews.map(review => `
+                    <div class="card">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <h3>${review.tenSanPham}</h3>
+                                <div class="rating-display">
+                                    ${'★'.repeat(review.diemDanhGia)}${'☆'.repeat(5 - review.diemDanhGia)}
+                                </div>
+                                <p>${review.noiDung}</p>
+                                <p class="review-date">Ngày đánh giá: ${formatDate(review.ngayDanhGia)}</p>
+                            </div>
+                            <div>
+                                <button class="btn" onclick="editReview(${review.id})">Sửa</button>
+                                <button class="btn btn-danger" onclick="deleteReview(${review.id})">Xóa</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                showAlert('Không thể tải đánh giá!', 'error');
+            }
+        };
+
+        // Delete review
+        const deleteReview = async (id) => {
+            if (!confirm('Bạn có chắc muốn xóa đánh giá này?')) return;
+            
+            try {
+                await apiRequest(`/DanhGia/${id}`, {
+                    method: 'DELETE'
+                });
+                showAlert('Xóa đánh giá thành công!');
+                loadUserReviews();
+            } catch (error) {
+                showAlert('Không thể xóa đánh giá!', 'error');
+            }
+        };
+
+        // Logout handler
+        document.getElementById('logoutBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            removeToken();
+            window.location.href = 'login.html';
+        });
+
+        // Initial load
+        loadProductsForReview();
+        loadUserReviews();
+    </script>
+
+    <style>
+        .rating {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+        }
+
+        .rating input {
+            display: none;
+        }
+
+        .rating label {
+            cursor: pointer;
+            font-size: 2rem;
+            color: #ddd;
+            padding: 0 0.1em;
+        }
+
+        .rating input:checked ~ label,
+        .rating label:hover,
+        .rating label:hover ~ label {
+            color: #ffd700;
+        }
+
+        .rating-display {
+            color: #ffd700;
+            font-size: 1.5rem;
+            margin: 0.5rem 0;
+        }
+
+        .review-date {
+            color: #666;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+
+        .btn-danger {
+            background-color: #dc143c;
+        }
+
+        .btn-danger:hover {
+            background-color: #b22222;
+        }
+    </style>
+
+    <footer>
+        <div class="container">
+            <hr>
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="payment-methods text-center mb-3">
+                        <span class="text-muted me-2">Chấp nhận thanh toán:</span>
+                        <div class="d-inline-flex gap-3">
+                            <i class="fab fa-cc-visa fa-lg" style="color: #1A1F71;" aria-label="Visa"></i>
+                            <i class="fab fa-cc-mastercard fa-lg" style="color: #EB001B;" aria-label="Mastercard"></i>
+                            <i class="fab fa-cc-paypal fa-lg" style="color: #003087;" aria-label="PayPal"></i>
+                            <i class="fab fa-cc-apple-pay fa-lg" style="color: #000000;" aria-label="Apple Pay"></i>
+                            <i class="fas fa-money-bill-wave fa-lg" style="color: #28a745;" aria-label="Tiền mặt"></i>
+                        </div>
+                    </div>
+                    <div class="legal-links text-center mb-3">
+                        <a href="tos.html" class="text-decoration-none text-muted me-3">Điều khoản sử dụng</a>
+                        <a href="privacy.html" class="text-decoration-none text-muted me-3">Chính sách bảo mật</a>
+                        <a href="cookies.html" class="text-decoration-none text-muted">Cài đặt cookie</a>
+                    </div>
+                    <div class="copyright text-center">
+                        <p class="mb-0 text-muted">&copy; 2024 <strong class="main-blue">HtStore</strong>. Tất cả quyền được bảo lưu.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html> 

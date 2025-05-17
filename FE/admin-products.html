@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý sản phẩm - HtStore</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+</head>
+<body>
+    <!-- Header/Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold main-blue" href="index.html">HtStore</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="products.html">Sản phẩm</a></li>
+                    <li class="nav-item"><a class="nav-link" href="cart.html">Giỏ hàng</a></li>
+                    <li class="nav-item"><a class="nav-link" href="orders.html">Đơn hàng</a></li>
+                    <li class="nav-item"><a class="nav-link" href="profile.html"><i class="fa fa-user"></i></a></li>
+                    <li class="nav-item" id="loginNavItem"><a class="nav-link" href="login.html">Đăng nhập</a></li>
+                    <li class="nav-item" id="logoutNavItem" style="display: none;">
+                        <a class="nav-link" href="#" onclick="logout()">Đăng xuất</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container py-4">
+        <h2 class="main-blue mb-4">Quản lý sản phẩm</h2>
+        <div class="table-responsive">
+            <table class="table table-bordered align-middle" id="productsTable">
+                <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Giá bán</th>
+                        <th>Số lượng</th>
+                        <th>SKU</th>
+                        <th>Trạng thái</th>
+                        <th>Danh mục</th>
+                        <th>Hình ảnh</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody id="productsTbody">
+                    <!-- Sản phẩm sẽ được render ở đây -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Modal Sửa sản phẩm -->
+    <div class="modal fade" id="editProductModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Sửa thông tin sản phẩm</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editProductForm">
+                        <input type="hidden" id="editProductId">
+                        <div class="mb-3">
+                            <label class="form-label">Tên sản phẩm</label>
+                            <input type="text" class="form-control" id="editTenSanPham" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Mô tả</label>
+                            <textarea class="form-control" id="editMoTa" rows="2"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Giá bán</label>
+                            <input type="number" class="form-control" id="editGiaBan" required min="0">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Số lượng tồn</label>
+                            <input type="number" class="form-control" id="editSoLuongTon" required min="0">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Hình ảnh</label>
+                            <input type="text" class="form-control" id="editHinhAnh">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Hình ảnh phụ</label>
+                            <input type="text" class="form-control" id="editHinhAnhPhu">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">SKU</label>
+                            <input type="text" class="form-control" id="editSku">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Trạng thái</label>
+                            <select class="form-select" id="editTrangThaiSanPham">
+                                <option value="1">Còn hàng</option>
+                                <option value="0">Hết hàng</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">ID Danh mục</label>
+                            <input type="number" class="form-control" id="editIdDanhMuc" required min="0">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" onclick="submitEditProduct()">Lưu thay đổi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5 class="main-blue mb-3">Về chúng tôi</h5>
+                    <p>HtStore - Nơi mua sắm trực tuyến đáng tin cậy với hàng ngàn sản phẩm chất lượng.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="main-blue mb-3">Liên kết nhanh</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-decoration-none">Trang chủ</a></li>
+                        <li><a href="products.html" class="text-decoration-none">Sản phẩm</a></li>
+                        <li><a href="cart.html" class="text-decoration-none">Giỏ hàng</a></li>
+                        <li><a href="orders.html" class="text-decoration-none">Đơn hàng</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="main-blue mb-3">Liên hệ</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-phone me-2"></i> 0123 456 789</li>
+                        <li><i class="fas fa-envelope me-2"></i> contact@htstore.com</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i> 123 Đường ABC, Quận XYZ, TP.HCM</li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p class="mb-0">&copy; 2024 HtStore. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="common.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Navbar login/logout đồng bộ
+        document.addEventListener('DOMContentLoaded', function() {
+            const token = localStorage.getItem('token');
+            const loginNavItem = document.getElementById('loginNavItem');
+            const logoutNavItem = document.getElementById('logoutNavItem');
+            if (token) {
+                loginNavItem.style.display = 'none';
+                logoutNavItem.style.display = 'block';
+            } else {
+                loginNavItem.style.display = 'block';
+                logoutNavItem.style.display = 'none';
+            }
+        });
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.href = 'index.html';
+        }
+
+        // Modal Bootstrap
+        const editProductModal = new bootstrap.Modal(document.getElementById('editProductModal'));
+        let currentEditProductId = null;
+        let productsList = [];
+
+        // Load danh sách sản phẩm
+        async function loadProducts() {
+            try {
+                const res = await fetch('http://localhost:5140/api/SanPham');
+                const products = await res.json();
+                productsList = products;
+                const tbody = document.getElementById('productsTbody');
+                tbody.innerHTML = products.map(product => `
+                    <tr>
+                        <td>${product.id_SanPham}</td>
+                        <td>${product.tenSanPham}</td>
+                        <td>${product.giaBan.toLocaleString()} ₫</td>
+                        <td>${product.soLuongTon}</td>
+                        <td>${product.sku}</td>
+                        <td>${product.trangThaiSanPham === 1 ? 'Còn hàng' : 'Hết hàng'}</td>
+                        <td>${product.id_DanhMuc}</td>
+                        <td><img src="${product.hinhAnh}" alt="${product.tenSanPham}" style="width:50px;height:50px;object-fit:cover;" onerror="this.onerror=null;this.src='https://via.placeholder.com/50x50?text=No+Image'"></td>
+                        <td><button class="btn btn-sm btn-warning" onclick="openEditProductModal(${product.id_SanPham})"><i class="fa fa-edit"></i> Sửa</button></td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                alert('Không thể tải danh sách sản phẩm!');
+            }
+        }
+
+        // Mở modal sửa sản phẩm
+        function openEditProductModal(productId) {
+            const product = productsList.find(p => p.id_SanPham == productId);
+            if (!product) return;
+            currentEditProductId = product.id_SanPham;
+            document.getElementById('editProductId').value = product.id_SanPham;
+            document.getElementById('editTenSanPham').value = product.tenSanPham;
+            document.getElementById('editMoTa').value = product.moTa || '';
+            document.getElementById('editGiaBan').value = product.giaBan;
+            document.getElementById('editSoLuongTon').value = product.soLuongTon;
+            document.getElementById('editHinhAnh').value = product.hinhAnh || '';
+            document.getElementById('editHinhAnhPhu').value = product.hinhAnhPhu || '';
+            document.getElementById('editSku').value = product.sku || '';
+            document.getElementById('editTrangThaiSanPham').value = product.trangThaiSanPham;
+            document.getElementById('editIdDanhMuc').value = product.id_DanhMuc;
+            editProductModal.show();
+        }
+
+        // Gửi PUT cập nhật sản phẩm
+        async function submitEditProduct() {
+            const id = document.getElementById('editProductId').value;
+            const data = {
+                tenSanPham: document.getElementById('editTenSanPham').value,
+                moTa: document.getElementById('editMoTa').value,
+                giaBan: parseInt(document.getElementById('editGiaBan').value),
+                soLuongTon: parseInt(document.getElementById('editSoLuongTon').value),
+                hinhAnh: document.getElementById('editHinhAnh').value,
+                hinhAnhPhu: document.getElementById('editHinhAnhPhu').value,
+                sku: document.getElementById('editSku').value,
+                trangThaiSanPham: parseInt(document.getElementById('editTrangThaiSanPham').value),
+                id_DanhMuc: parseInt(document.getElementById('editIdDanhMuc').value)
+            };
+            try {
+                const res = await fetch(`http://localhost:5140/api/SanPham/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    },
+                    body: JSON.stringify(data)
+                });
+                if (res.ok) {
+                    alert('Cập nhật sản phẩm thành công!');
+                    editProductModal.hide();
+                    loadProducts();
+                } else {
+                    const err = await res.json();
+                    alert(err.message || 'Cập nhật thất bại!');
+                }
+            } catch (error) {
+                alert('Có lỗi xảy ra khi cập nhật sản phẩm!');
+            }
+        }
+
+        // Tải danh sách sản phẩm khi trang được tải
+        document.addEventListener('DOMContentLoaded', loadProducts);
+    </script>
+</body>
+</html> 

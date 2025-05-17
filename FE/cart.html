@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ hàng - HtStore</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+</head>
+<body>
+    <!-- Header/Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold main-blue" href="index.html">HtStore</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="products.html">Sản phẩm</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="cart.html">Giỏ hàng</a></li>
+                    <li class="nav-item"><a class="nav-link" href="orders.html">Đơn hàng</a></li>
+                    <li class="nav-item"><a class="nav-link" href="profile.html"><i class="fa fa-user"></i></a></li>
+                    <li class="nav-item" id="loginNavItem"><a class="nav-link" href="login.html">Đăng nhập</a></li>
+                    <li class="nav-item" id="logoutNavItem" style="display: none;">
+                        <a class="nav-link" href="#" onclick="logout()">Đăng xuất</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-xl-8">
+                <div class="card p-4">
+                    <h2 class="main-blue mb-4">Giỏ hàng của bạn</h2>
+                    <div id="cartItems"></div>
+                    <div id="cartSummary" class="cart-summary"></div>
+                    <div class="d-flex justify-content-between mt-3">
+                        <button id="clearCartBtn" class="btn btn-danger" style="display: none;">Xóa tất cả</button>
+                        <button id="checkoutBtn" class="btn btn-primary" style="display: none;">Thanh toán</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5 class="main-blue mb-3">Về chúng tôi</h5>
+                    <p>HtStore - Nơi mua sắm trực tuyến đáng tin cậy với hàng ngàn sản phẩm chất lượng.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="main-blue mb-3">Liên kết nhanh</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-decoration-none">Trang chủ</a></li>
+                        <li><a href="products.html" class="text-decoration-none">Sản phẩm</a></li>
+                        <li><a href="cart.html" class="text-decoration-none">Giỏ hàng</a></li>
+                        <li><a href="orders.html" class="text-decoration-none">Đơn hàng</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="main-blue mb-3">Liên hệ</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-phone me-2"></i> 0123 456 789</li>
+                        <li><i class="fas fa-envelope me-2"></i> contact@htstore.com</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i> 123 Đường ABC, Quận XYZ, TP.HCM</li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="payment-methods text-center mb-3">
+                        <span class="text-muted me-2">Chấp nhận thanh toán:</span>
+                        <div class="d-inline-flex gap-3">
+                            <i class="fab fa-cc-visa fa-lg" style="color: #1A1F71;" aria-label="Visa"></i>
+                            <i class="fab fa-cc-mastercard fa-lg" style="color: #EB001B;" aria-label="Mastercard"></i>
+                            <i class="fab fa-cc-paypal fa-lg" style="color: #003087;" aria-label="PayPal"></i>
+                            <i class="fab fa-cc-apple-pay fa-lg" style="color: #000000;" aria-label="Apple Pay"></i>
+                            <i class="fas fa-money-bill-wave fa-lg" style="color: #28a745;" aria-label="Tiền mặt"></i>
+                        </div>
+                    </div>
+                    <div class="legal-links text-center mb-3">
+                        <a href="tos.html" class="text-decoration-none text-muted me-3">Điều khoản sử dụng</a>
+                        <a href="privacy.html" class="text-decoration-none text-muted me-3">Chính sách bảo mật</a>
+                        <a href="cookies.html" class="text-decoration-none text-muted">Cài đặt cookie</a>
+                    </div>
+                    <div class="copyright text-center">
+                        <p class="mb-0 text-muted">&copy; 2024 <strong class="main-blue">HtStore</strong>. Tất cả quyền được bảo lưu.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="common.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Navbar login/logout đồng bộ
+        document.addEventListener('DOMContentLoaded', function() {
+            const token = localStorage.getItem('token');
+            const loginNavItem = document.getElementById('loginNavItem');
+            const logoutNavItem = document.getElementById('logoutNavItem');
+            if (token) {
+                loginNavItem.style.display = 'none';
+                logoutNavItem.style.display = 'block';
+            } else {
+                loginNavItem.style.display = 'block';
+                logoutNavItem.style.display = 'none';
+            }
+        });
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.href = 'index.html';
+        }
+        // Check authentication
+        requireAuth();
+
+        // Clear cart
+        const clearCart = async () => {
+            try {
+                if (confirm('Bạn có chắc chắn muốn xóa tất cả sản phẩm trong giỏ hàng?')) {
+                    const res = await apiRequest('/GioHang/clear', {
+                        method: 'DELETE'
+                    });
+                    loadCart();
+                    showAlert('Đã xóa tất cả sản phẩm trong giỏ hàng!');
+                    console.log('Clear cart response:', res);
+                }
+            } catch (error) {
+                console.error('Lỗi khi xóa giỏ hàng:', error);
+                showAlert('Không thể xóa giỏ hàng!', 'error');
+                loadCart(); // Luôn reload lại giao diện để tránh bị treo
+            }
+        };
+
+        // Đảm bảo gắn sự kiện cho nút xóa tất cả
+        document.getElementById('clearCartBtn').onclick = clearCart;
+
+        // Load cart
+        const loadCart = async () => {
+            try {
+                const cart = await apiRequest('/GioHang');
+                const cartItems = document.getElementById('cartItems');
+                const cartSummary = document.getElementById('cartSummary');
+                const clearCartBtn = document.getElementById('clearCartBtn');
+                const checkoutBtn = document.getElementById('checkoutBtn');
+                
+                if (cart.chiTietGioHangs.length === 0) {
+                    cartItems.innerHTML = '<p>Giỏ hàng trống</p>';
+                    cartSummary.innerHTML = '';
+                    clearCartBtn.style.display = 'none';
+                    checkoutBtn.style.display = 'none';
+                    return;
+                }
+
+                // Hiển thị nút xóa tất cả và thanh toán
+                clearCartBtn.style.display = 'block';
+                // Render cart items
+                cartItems.innerHTML = `
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Sản phẩm</th>
+                                <th>Giá</th>
+                                <th>Số lượng</th>
+                                <th>Thành tiền</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${cart.chiTietGioHangs.map(item => `
+                                <tr>
+                                    <td>
+                                        <div style="display: flex; align-items: center; gap: 1rem;">
+                                            <img src="${item.hinhAnh}" alt="${item.tenSanPham}" style="width: 50px; height: 50px; object-fit: cover;" onerror="this.onerror=null;this.src='default.jpg'">
+                                            <div>
+                                                <h4>${item.tenSanPham}</h4>
+                                                ${item.kichCo ? `<p>Kích cỡ: ${item.kichCo}</p>` : ''}
+                                                ${item.mauSac ? `<p>Màu sắc: ${item.mauSac}</p>` : ''}
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>${formatCurrency(item.donGia)}</td>
+                                    <td>
+                                        <input type="number" value="${item.soLuong}" min="1" onchange="updateQuantity(${item.id_SanPham}, this.value, '${item.kichCo || ''}', '${item.mauSac || ''}')">
+                                    </td>
+                                    <td>${formatCurrency(item.donGia * item.soLuong)}</td>
+                                    <td>
+                                        <button class="btn" onclick="removeItem(${item.id_SanPham}, '${item.kichCo || ''}', '${item.mauSac || ''}')">Xóa</button>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+
+                // Render summary
+                cartSummary.innerHTML = `
+                    <div style="text-align: right; margin-top: 1rem;">
+                        <h3>Tổng tiền: ${formatCurrency(cart.tongTien)}</h3>
+                    </div>
+                `;
+
+                document.getElementById('checkoutBtn').style.display = 'block';
+            } catch (error) {
+                showAlert('Không thể tải giỏ hàng!', 'error');
+            }
+        };
+
+        // Update quantity
+        const updateQuantity = async (productId, quantity, kichCo, mauSac) => {
+            try {
+                await apiRequest(`/GioHang/update/${productId}/${kichCo || 'null'}/${mauSac || 'null'}`, {
+                    method: 'PUT',
+                    body: JSON.stringify({ soLuong: parseInt(quantity) })
+                });
+                loadCart();
+            } catch (error) {
+                showAlert('Không thể cập nhật số lượng!', 'error');
+            }
+        };
+
+        // Remove item
+        const removeItem = async (productId, kichCo, mauSac) => {
+            try {
+                await apiRequest(`/GioHang/remove/${productId}/${kichCo || 'null'}/${mauSac || 'null'}`, {
+                    method: 'DELETE'
+                });
+                loadCart();
+            } catch (error) {
+                showAlert('Không thể xóa sản phẩm!', 'error');
+            }
+        };
+
+        // Checkout
+        document.getElementById('checkoutBtn').addEventListener('click', async () => {
+            try {
+                const cart = await apiRequest('/GioHang');
+                if (!cart || cart.chiTietGioHangs.length === 0) {
+                    showAlert('Giỏ hàng của bạn đang trống!', 'error');
+                    return;
+                }
+                window.location.href = 'checkout.html';
+            } catch (error) {
+                showAlert('Không thể chuyển đến trang thanh toán!', 'error');
+            }
+        });
+
+        // Initial load
+        loadCart();
+    </script>
+</body>
+</html> 

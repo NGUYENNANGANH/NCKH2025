@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sản phẩm - HtStore</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+</head>
+<body>
+    <!-- Header/Navbar (giống template) -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold main-blue" href="index.html">HtStore</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="products.html">Sản phẩm</a></li>
+                    <li class="nav-item"><a class="nav-link" href="cart.html">Giỏ hàng</a></li>
+                    <li class="nav-item"><a class="nav-link" href="orders.html">Đơn hàng</a></li>
+                    <li class="nav-item"><a class="nav-link" href="profile.html"><i class="fa fa-user"></i></a></li>
+                    <li class="nav-item" id="loginNavItem"><a class="nav-link" href="login.html">Đăng nhập</a></li>
+                    <li class="nav-item" id="logoutNavItem" style="display: none;">
+                        <a class="nav-link" href="#" onclick="logout()">Đăng xuất</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container py-4">
+        <h2 class="main-blue mb-4">Danh sách sản phẩm</h2>
+        <div class="row mb-3 g-2 align-items-center">
+            <div class="col-md-4">
+                <input type="text" id="searchInput" class="form-control" placeholder="Tìm kiếm sản phẩm...">
+            </div>
+            <div class="col-md-3">
+                <select id="categorySelect" class="form-select">
+                    <option value="">Tất cả danh mục</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-primary w-100" id="searchBtn"><i class="fa fa-search me-1"></i> Tìm kiếm</button>
+            </div>
+        </div>
+        <div class="row g-4" id="productsList">
+            <!-- Sản phẩm sẽ được render ở đây -->
+        </div>
+        <nav>
+            <ul class="pagination justify-content-center mt-4" id="pagination"></ul>
+        </nav>
+        <div id="noProductsMsg" class="text-center text-muted mt-4" style="display:none;">Không tìm thấy sản phẩm phù hợp.</div>
+    </main>
+
+    <!-- Footer (giống template) -->
+    <footer class="bg-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5 class="main-blue mb-3">Về chúng tôi</h5>
+                    <p>HtStore - Nơi mua sắm trực tuyến đáng tin cậy với hàng ngàn sản phẩm chất lượng.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="main-blue mb-3">Liên kết nhanh</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-decoration-none">Trang chủ</a></li>
+                        <li><a href="products.html" class="text-decoration-none">Sản phẩm</a></li>
+                        <li><a href="cart.html" class="text-decoration-none">Giỏ hàng</a></li>
+                        <li><a href="orders.html" class="text-decoration-none">Đơn hàng</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="main-blue mb-3">Liên hệ</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-phone me-2"></i> 0123 456 789</li>
+                        <li><i class="fas fa-envelope me-2"></i> contact@htstore.com</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i> 123 Đường ABC, Quận XYZ, TP.HCM</li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="payment-methods text-center mb-3">
+                        <span class="text-muted me-2">Chấp nhận thanh toán:</span>
+                        <div class="d-inline-flex gap-3">
+                            <i class="fab fa-cc-visa fa-lg" style="color: #1A1F71;" aria-label="Visa"></i>
+                            <i class="fab fa-cc-mastercard fa-lg" style="color: #EB001B;" aria-label="Mastercard"></i>
+                            <i class="fab fa-cc-paypal fa-lg" style="color: #003087;" aria-label="PayPal"></i>
+                            <i class="fab fa-cc-apple-pay fa-lg" style="color: #000000;" aria-label="Apple Pay"></i>
+                            <i class="fas fa-money-bill-wave fa-lg" style="color: #28a745;" aria-label="Tiền mặt"></i>
+                        </div>
+                    </div>
+                    <div class="legal-links text-center mb-3">
+                        <a href="tos.html" class="text-decoration-none text-muted me-3">Điều khoản sử dụng</a>
+                        <a href="privacy.html" class="text-decoration-none text-muted me-3">Chính sách bảo mật</a>
+                        <a href="cookies.html" class="text-decoration-none text-muted">Cài đặt cookie</a>
+                    </div>
+                    <div class="copyright text-center">
+                        <p class="mb-0 text-muted">&copy; 2024 <strong class="main-blue">HtStore</strong>. Tất cả quyền được bảo lưu.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="common.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Navbar login/logout
+        document.addEventListener('DOMContentLoaded', function() {
+            const token = localStorage.getItem('token');
+            const loginNavItem = document.getElementById('loginNavItem');
+            const logoutNavItem = document.getElementById('logoutNavItem');
+            if (token) {
+                loginNavItem.style.display = 'none';
+                logoutNavItem.style.display = 'block';
+            } else {
+                loginNavItem.style.display = 'block';
+                logoutNavItem.style.display = 'none';
+            }
+        });
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.href = 'index.html';
+        }
+
+        // Render sản phẩm
+        function renderProduct(product) {
+            const price = product.giaKhuyenMai || product.giaBan;
+            const originalPrice = product.giaKhuyenMai ? `<del class='text-muted me-2'>${product.giaBan.toLocaleString()} ₫</del>` : '';
+            return `
+                <div class="col-6 col-md-3 position-relative">
+                    <div class="product-card p-3 h-100 d-flex flex-column justify-content-between" style="cursor:pointer;" onclick="window.location.href='product-detail.html?id=${product.id_SanPham}'">
+                        <img src="${product.hinhAnh}" class="product-img mb-2" alt="${product.tenSanPham}">
+                        <div class="product-title">${product.tenSanPham}</div>
+                        <div class="product-price mb-2">
+                            ${originalPrice}
+                            ${price.toLocaleString()} ₫
+                        </div>
+                        <button class="btn btn-primary w-100 mt-auto" type="button" onclick="event.stopPropagation(); window.location.href='product-detail.html?id=${product.id_SanPham}'">Xem chi tiết</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Lấy danh mục sản phẩm
+        async function loadCategories() {
+            try {
+                const res = await fetch('http://localhost:5140/api/DanhMuc');
+                const categories = await res.json();
+                const select = document.getElementById('categorySelect');
+                categories.forEach(cat => {
+                    const opt = document.createElement('option');
+                    opt.value = cat.id_DanhMuc;
+                    opt.textContent = cat.tenDanhMuc;
+                    select.appendChild(opt);
+                });
+            } catch (e) {
+                // Không làm gì nếu lỗi
+            }
+        }
+
+        // Lấy và hiển thị sản phẩm
+        async function loadProducts({keyword = '', categoryId = '', page = 1} = {}) {
+            let url = 'http://localhost:5140/api/SanPham';
+            if (keyword) {
+                url = `http://localhost:5140/api/SanPham/search?keyword=${encodeURIComponent(keyword)}`;
+            } else if (categoryId) {
+                url = `http://localhost:5140/api/SanPham/DanhMuc/${categoryId}`;
+            }
+            try {
+                const res = await fetch(url);
+                const products = await res.json();
+                const list = document.getElementById('productsList');
+                const noMsg = document.getElementById('noProductsMsg');
+                const pagination = document.getElementById('pagination');
+                const pageSize = 8;
+                const totalPages = Math.ceil(products.length / pageSize);
+                const currentPage = Math.max(1, Math.min(page, totalPages));
+                const start = (currentPage - 1) * pageSize;
+                const end = start + pageSize;
+                const pageProducts = products.slice(start, end);
+                if (products.length === 0) {
+                    list.innerHTML = '';
+                    noMsg.style.display = 'block';
+                    pagination.innerHTML = '';
+                } else {
+                    list.innerHTML = pageProducts.map(renderProduct).join('');
+                    noMsg.style.display = 'none';
+                    // Render pagination
+                    let pagHtml = '';
+                    if (totalPages > 1) {
+                        pagHtml += `<li class="page-item${currentPage === 1 ? ' disabled' : ''}"><a class="page-link" href="#" data-page="${currentPage - 1}">&laquo;</a></li>`;
+                        for (let i = 1; i <= totalPages; i++) {
+                            pagHtml += `<li class="page-item${i === currentPage ? ' active' : ''}"><a class="page-link" href="#" data-page="${i}">${i}</a></li>`;
+                        }
+                        pagHtml += `<li class="page-item${currentPage === totalPages ? ' disabled' : ''}"><a class="page-link" href="#" data-page="${currentPage + 1}">&raquo;</a></li>`;
+                    }
+                    pagination.innerHTML = pagHtml;
+                    // Add event listeners
+                    pagination.querySelectorAll('a.page-link').forEach(link => {
+                        link.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            const gotoPage = parseInt(this.getAttribute('data-page'));
+                            if (!isNaN(gotoPage) && gotoPage >= 1 && gotoPage <= totalPages && gotoPage !== currentPage) {
+                                loadProducts({keyword, categoryId, page: gotoPage});
+                            }
+                        });
+                    });
+                }
+            } catch (e) {
+                document.getElementById('productsList').innerHTML = '';
+                document.getElementById('noProductsMsg').style.display = 'block';
+                document.getElementById('pagination').innerHTML = '';
+            }
+        }
+
+        // Sự kiện tìm kiếm và lọc
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCategories();
+            loadProducts();
+            const searchBtn = document.getElementById('searchBtn');
+            const searchInput = document.getElementById('searchInput');
+            const categorySelect = document.getElementById('categorySelect');
+
+            searchBtn.addEventListener('click', function() {
+                const keyword = searchInput.value.trim();
+                const categoryId = categorySelect.value;
+                if (keyword) {
+                    loadProducts({keyword});
+                } else if (categoryId) {
+                    loadProducts({categoryId});
+                } else {
+                    loadProducts();
+                }
+            });
+            searchInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    searchBtn.click();
+                }
+            });
+            categorySelect.addEventListener('change', function() {
+                const categoryId = categorySelect.value;
+                if (categoryId) {
+                    loadProducts({categoryId});
+                } else {
+                    loadProducts();
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

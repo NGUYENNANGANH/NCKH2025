@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tài khoản - HtStore</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <style>
+        .profile-section-title {
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: #1565c0;
+            margin-bottom: 1.5rem;
+        }
+        .profile-card {
+            border-radius: 18px;
+            box-shadow: 0 2px 12px rgba(21,101,192,0.07);
+            background: #fff;
+        }
+        .profile-form .form-label {
+            font-weight: 500;
+        }
+        .profile-form .form-control {
+            border-radius: 8px;
+        }
+        .profile-form textarea.form-control {
+            min-height: 80px;
+        }
+        .profile-btn {
+            min-width: 160px;
+            font-weight: 500;
+            border-radius: 8px;
+        }
+        .address-badge {
+            background-color: #32cd32;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+        }
+        .modal-content {
+            border-radius: 16px;
+        }
+        @media (min-width: 768px) {
+            .modal-dialog {
+                max-width: 480px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header/Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold main-blue" href="index.html">HtStore</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="products.html">Sản phẩm</a></li>
+                    <li class="nav-item"><a class="nav-link" href="cart.html">Giỏ hàng</a></li>
+                    <li class="nav-item"><a class="nav-link" href="orders.html">Đơn hàng</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="profile.html"><i class="fa fa-user"></i></a></li>
+                    <li class="nav-item" id="loginNavItem"><a class="nav-link" href="login.html">Đăng nhập</a></li>
+                    <li class="nav-item" id="logoutNavItem" style="display: none;">
+                        <a class="nav-link" href="#" onclick="logout()">Đăng xuất</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-9 col-xl-8 d-flex flex-column gap-4">
+                <div class="card profile-card p-4">
+                    <div class="profile-section-title">Thông tin tài khoản</div>
+                    <form id="profileForm" class="profile-form">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email:</label>
+                            <input type="email" id="email" name="email" class="form-control" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fullName" class="form-label">Họ và tên:</label>
+                            <input type="text" id="fullName" name="fullName" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phoneNumber" class="form-label">Số điện thoại:</label>
+                            <input type="tel" id="phoneNumber" name="phoneNumber" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Địa chỉ:</label>
+                            <textarea id="address" name="address" class="form-control" required></textarea>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary profile-btn">Cập nhật thông tin</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="card profile-card p-4">
+                    <div class="profile-section-title">Đổi mật khẩu</div>
+                    <form id="changePasswordForm" class="profile-form">
+                        <div class="mb-3">
+                            <label for="currentPassword" class="form-label">Mật khẩu hiện tại:</label>
+                            <input type="password" id="currentPassword" name="currentPassword" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="newPassword" class="form-label">Mật khẩu mới:</label>
+                            <input type="password" id="newPassword" name="newPassword" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirmPassword" class="form-label">Xác nhận mật khẩu mới:</label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" required>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary profile-btn">Đổi mật khẩu</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="card profile-card p-4">
+                    <div class="profile-section-title">Địa chỉ giao hàng</div>
+                    <div id="addressesList"></div>
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-success profile-btn mt-3" onclick="showAddAddressForm()">
+                            <i class="fa fa-plus me-1"></i> Thêm địa chỉ mới
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal thêm địa chỉ -->
+    <div class="modal fade" id="addressModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thêm địa chỉ mới</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addAddressForm">
+                        <div class="mb-3">
+                            <label for="tenNguoiNhan" class="form-label">Tên người nhận:</label>
+                            <input type="text" id="tenNguoiNhan" name="tenNguoiNhan" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="soDienThoai" class="form-label">Số điện thoại:</label>
+                            <input type="tel" id="soDienThoai" name="soDienThoai" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="tinh_ThanhPho" class="form-label">Tỉnh/Thành phố:</label>
+                            <input type="text" id="tinh_ThanhPho" name="tinh_ThanhPho" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="quan_Huyen" class="form-label">Quận/Huyện:</label>
+                            <input type="text" id="quan_Huyen" name="quan_Huyen" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phuong_Xa" class="form-label">Phường/Xã:</label>
+                            <input type="text" id="phuong_Xa" name="phuong_Xa" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="diaChiChiTiet" class="form-label">Địa chỉ chi tiết:</label>
+                            <textarea id="diaChiChiTiet" name="diaChiChiTiet" class="form-control" required></textarea>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="macDinh" name="macDinh">
+                            <label class="form-check-label" for="macDinh">Đặt làm địa chỉ mặc định</label>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary profile-btn">Thêm địa chỉ</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5 class="main-blue mb-3">Về chúng tôi</h5>
+                    <p>HtStore - Nơi mua sắm trực tuyến đáng tin cậy với hàng ngàn sản phẩm chất lượng.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="main-blue mb-3">Liên kết nhanh</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-decoration-none">Trang chủ</a></li>
+                        <li><a href="products.html" class="text-decoration-none">Sản phẩm</a></li>
+                        <li><a href="cart.html" class="text-decoration-none">Giỏ hàng</a></li>
+                        <li><a href="orders.html" class="text-decoration-none">Đơn hàng</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="main-blue mb-3">Liên hệ</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-phone me-2"></i> 0123 456 789</li>
+                        <li><i class="fas fa-envelope me-2"></i> contact@htstore.com</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i> 123 Đường ABC, Quận XYZ, TP.HCM</li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="payment-methods text-center mb-3">
+                        <span class="text-muted me-2">Chấp nhận thanh toán:</span>
+                        <div class="d-inline-flex gap-3">
+                            <i class="fab fa-cc-visa fa-lg" style="color: #1A1F71;" aria-label="Visa"></i>
+                            <i class="fab fa-cc-mastercard fa-lg" style="color: #EB001B;" aria-label="Mastercard"></i>
+                            <i class="fab fa-cc-paypal fa-lg" style="color: #003087;" aria-label="PayPal"></i>
+                            <i class="fab fa-cc-apple-pay fa-lg" style="color: #000000;" aria-label="Apple Pay"></i>
+                            <i class="fas fa-money-bill-wave fa-lg" style="color: #28a745;" aria-label="Tiền mặt"></i>
+                        </div>
+                    </div>
+                    <div class="legal-links text-center mb-3">
+                        <a href="tos.html" class="text-decoration-none text-muted me-3">Điều khoản sử dụng</a>
+                        <a href="privacy.html" class="text-decoration-none text-muted me-3">Chính sách bảo mật</a>
+                        <a href="cookies.html" class="text-decoration-none text-muted">Cài đặt cookie</a>
+                    </div>
+                    <div class="copyright text-center">
+                        <p class="mb-0 text-muted">&copy; 2024 <strong class="main-blue">HtStore</strong>. Tất cả quyền được bảo lưu.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="common.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Check authentication
+        requireAuth();
+
+        // Load profile
+        const loadProfile = async () => {
+            try {
+                const profile = await apiRequest('/User/profile');
+                document.getElementById('email').value = profile.email;
+                document.getElementById('fullName').value = profile.fullName;
+                document.getElementById('phoneNumber').value = profile.phoneNumber;
+                document.getElementById('address').value = profile.address;
+            } catch (error) {
+                showAlert('Không thể tải thông tin tài khoản!', 'error');
+            }
+        };
+
+        // Update profile
+        document.getElementById('profileForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            
+            try {
+                await apiRequest('/User/profile', {
+                    method: 'PUT',
+                    body: JSON.stringify(data)
+                });
+                showAlert('Cập nhật thông tin thành công!');
+            } catch (error) {
+                showAlert('Không thể cập nhật thông tin!', 'error');
+            }
+        });
+
+        // Change password
+        document.getElementById('changePasswordForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (newPassword !== confirmPassword) {
+                showAlert('Mật khẩu mới không khớp!', 'error');
+                return;
+            }
+            
+            try {
+                await apiRequest('/User/change-password', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        currentPassword,
+                        newPassword
+                    })
+                });
+                showAlert('Đổi mật khẩu thành công!');
+                e.target.reset();
+            } catch (error) {
+                showAlert('Không thể đổi mật khẩu!', 'error');
+            }
+        });
+
+        // Load addresses
+        const loadAddresses = async () => {
+            try {
+                const addresses = await apiRequest('/DiaChi');
+                const addressesList = document.getElementById('addressesList');
+                
+                if (addresses.length === 0) {
+                    addressesList.innerHTML = '<p>Chưa có địa chỉ nào</p>';
+                    return;
+                }
+
+                addressesList.innerHTML = addresses.map(address => `
+                    <div class="card mb-3 p-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 class="mb-1">${address.tenNguoiNhan}</h5>
+                                <p class="mb-1">${address.soDienThoai}</p>
+                                <p class="mb-1">${address.diaChiChiTiet}, ${address.phuong_Xa}, ${address.quan_Huyen}, ${address.tinh_ThanhPho}</p>
+                                ${address.macDinh ? '<span class="address-badge">Mặc định</span>' : ''}
+                            </div>
+                            <div>
+                                <button class="btn btn-outline-primary btn-sm me-2" onclick="editAddress(${address.id})">Sửa</button>
+                                <button class="btn btn-danger btn-sm" onclick="deleteAddress(${address.id})">Xóa</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                showAlert('Không thể tải địa chỉ!', 'error');
+            }
+        };
+
+        // Add address
+        const showAddAddressForm = () => {
+            const modal = new bootstrap.Modal(document.getElementById('addressModal'));
+            modal.show();
+        };
+
+        document.getElementById('addAddressForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            data.macDinh = document.getElementById('macDinh').checked;
+            
+            try {
+                await apiRequest('/DiaChi', {
+                    method: 'POST',
+                    body: JSON.stringify(data)
+                });
+                showAlert('Thêm địa chỉ thành công!');
+                const modal = bootstrap.Modal.getInstance(document.getElementById('addressModal'));
+                modal.hide();
+                e.target.reset();
+                loadAddresses();
+            } catch (error) {
+                showAlert('Không thể thêm địa chỉ!', 'error');
+            }
+        });
+
+        // Delete address
+        const deleteAddress = async (id) => {
+            if (!confirm('Bạn có chắc muốn xóa địa chỉ này?')) return;
+            
+            try {
+                await apiRequest(`/DiaChi/${id}`, {
+                    method: 'DELETE'
+                });
+                showAlert('Xóa địa chỉ thành công!');
+                loadAddresses();
+            } catch (error) {
+                showAlert('Không thể xóa địa chỉ!', 'error');
+            }
+        };
+
+        // Navbar login/logout
+        document.addEventListener('DOMContentLoaded', function() {
+            const token = localStorage.getItem('token');
+            const loginNavItem = document.getElementById('loginNavItem');
+            const logoutNavItem = document.getElementById('logoutNavItem');
+            if (token) {
+                loginNavItem.style.display = 'none';
+                logoutNavItem.style.display = 'block';
+            } else {
+                loginNavItem.style.display = 'block';
+                logoutNavItem.style.display = 'none';
+            }
+        });
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.href = 'index.html';
+        }
+
+        // Initial load
+        loadProfile();
+        loadAddresses();
+    </script>
+</body>
+</html> 

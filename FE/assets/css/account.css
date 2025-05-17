@@ -1,0 +1,182 @@
+/* Account Page Styles */
+
+/* Main section padding */
+.account.section {
+  padding: 80px 0;
+}
+
+/* Account sidebar */
+.account-sidebar {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.user-info {
+  padding: 20px 0;
+}
+
+.user-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: var(--accent-color);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: 600;
+  margin: 0 auto;
+}
+
+.avatar-text {
+  line-height: 1;
+}
+
+/* Nav pills customization */
+.nav-pills .nav-link {
+  color: #495057;
+  border-radius: 5px;
+  padding: 10px 15px;
+  margin-bottom: 8px;
+  text-align: left;
+  transition: all 0.3s ease;
+}
+
+.nav-pills .nav-link:hover {
+  background-color: #f8f9fa;
+}
+
+.nav-pills .nav-link.active {
+  background-color: var(--accent-color);
+  color: #fff;
+}
+
+.nav-pills .nav-link i {
+  width: 20px;
+  text-align: center;
+}
+
+/* Card customization */
+.card {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.card-header {
+  background-color: #fff;
+  border-bottom: 1px solid #eee;
+  padding: 15px 20px;
+  border-top-left-radius: 10px !important;
+  border-top-right-radius: 10px !important;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+/* Profile view */
+#profile-view .row {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+#profile-view .row:last-child {
+  border-bottom: none;
+}
+
+/* Forms */
+.form-label {
+  font-weight: 500;
+}
+
+.form-control {
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: 1px solid #ced4da;
+}
+
+.form-control:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 0.25rem rgba(10, 77, 184, 0.1);
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+}
+
+.btn-primary:hover {
+  background-color: #0842a0;
+  border-color: #0842a0;
+}
+
+.btn-outline-secondary {
+  color: #6c757d;
+  border-color: #6c757d;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  color: #fff;
+}
+
+/* Alerts */
+.alert {
+  border-radius: 5px;
+  padding: 12px 15px;
+  margin-bottom: 20px;
+}
+
+/* Empty state styling */
+.text-center.py-5 {
+  padding: 40px 0;
+}
+
+.text-center.py-5 i {
+  font-size: 48px;
+  color: #adb5bd;
+}
+
+.text-center.py-5 p {
+  margin-top: 15px;
+  color: #6c757d;
+}
+
+/* Form switches */
+.form-switch {
+  padding-left: 2.5em;
+}
+
+.form-check-input:checked {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+}
+
+/* Responsive adjustments */
+@media (max-width: 991.98px) {
+  .account-sidebar {
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .account.section {
+    padding: 60px 0;
+  }
+  
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+  
+  .card-header button {
+    margin-top: 10px;
+  }
+}
